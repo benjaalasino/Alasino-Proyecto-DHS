@@ -1,4 +1,4 @@
-# Generated from c:/Users/Usuario/OneDrive/Documents/DHS2025/src/main/python/compilador.g4 by ANTLR 4.13.1
+# Generated from c:/Users/Usuario/OneDrive/Documents/GitHub/Proyecto Alasino DHS/src/main/python/compilador.g4 by ANTLR 4.13.1
 from antlr4 import *
 from io import StringIO
 import sys

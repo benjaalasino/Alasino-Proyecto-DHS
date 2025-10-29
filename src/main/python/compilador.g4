@@ -44,7 +44,7 @@ ID : (LETRA | '_')(LETRA | DIGITO | '_')* ;
 WS : [ \n\r\t] -> skip ;
 OTRO : . ;
 
-programa : elemento_programa programa
+programa : elemento_programa 
          | EOF
          ;
 
@@ -65,21 +65,20 @@ instruccion : asignacion
             | ifor
             | ireturn
             | llamada_funcion PYC
-            | bloque
             ;
 
 bloque : LLA instrucciones LLC ;
 
 // Estructuras de control 
-iwhile : WHILE PA expr_logica PC instruccion ;
+iwhile : WHILE PA expr_logica PC bloque ;
 
-iif : IF PA expr_logica PC instruccion ielse ;
+iif : IF PA expr_logica PC bloque ielse ;
 
-ielse : ELSE instruccion
+ielse : ELSE bloque
       |
       ;
 
-ifor : FOR PA declaracion_for expr_logica PYC asignacion_for PC instruccion ;
+ifor : FOR PA declaracion_for expr_logica PYC asignacion_for PC bloque ;
 
 declaracion_for : declaracion_variable
                 | asignacion

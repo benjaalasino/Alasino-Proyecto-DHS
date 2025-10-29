@@ -2,13 +2,7 @@ import sys
 from antlr4 import *
 from compiladorLexer  import compiladorLexer
 from compiladorParser import compiladorParser
-
-# En caso de no poder ejecutar el programa Python por
-# problemas de version (error ATNdeserializer), se
-# pueden generar los archivos a mano.
-#
-# Ir a la carpeta donde esta el archivo .g4 y ejecutar 
-#     antlr4 -Dlanguage=Python3 -visitor compilador.g4 -o .
+from Escucha import Escucha
 
 def main(argv):
     archivo = "input/programa.txt"
@@ -18,8 +12,14 @@ def main(argv):
     lexer = compiladorLexer(input)
     stream = CommonTokenStream(lexer)
     parser = compiladorParser(stream)
+    
+
     tree = parser.programa()
-    print(tree.toStringTree(recog=parser))
+ 
+    esc = Escucha()
+    walker = ParseTreeWalker()
+    walker.walk(esc, tree)  
 
 if __name__ == '__main__':
     main(sys.argv)
+
