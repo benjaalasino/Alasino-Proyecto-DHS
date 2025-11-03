@@ -8,7 +8,7 @@ def main(argv):
     archivo = "input/programa.txt"
     if len(argv) > 1 :
         archivo = argv[1]
-    input = FileStream(archivo)
+    input = FileStream(archivo, encoding='utf-8')
     lexer = compiladorLexer(input)
     stream = CommonTokenStream(lexer)
     parser = compiladorParser(stream)

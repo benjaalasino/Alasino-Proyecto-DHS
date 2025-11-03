@@ -5,8 +5,10 @@ class ID:
     def __init__(self, nombre: str, tipoDato: str):
         self.nombre = nombre
         self.tipoDato = tipoDato
+        self.tipo = tipoDato  # Alias para compatibilidad
         self.inicializado = False
         self.usado = False
+        self.usada = False  # Alias para compatibilidad
 
     def getNombre(self):
         return self.nombre
@@ -22,9 +24,19 @@ class ID:
 
     def setUsado(self):
         self.usado = True
+        self.usada = True
 
     def getUsado(self):
         return self.usado
+    
+    def __str__(self):
+        estado = []
+        if self.inicializado:
+            estado.append("inicializado")
+        if self.usado:
+            estado.append("usado")
+        estado_str = ", ".join(estado) if estado else "sin inicializar, no usado"
+        return f"{self.__class__.__name__} '{self.nombre}' (tipo: {self.tipoDato}, {estado_str})"
 
 
 # Variable hereda de ID
@@ -54,6 +66,13 @@ class Contexto:
 
     def buscarSimbolo(self, nombre: str):
         return self.simbolos.get(nombre, None)
+    
+    def items(self):
+        """Permite iterar sobre los símbolos del contexto"""
+        return self.simbolos.items()
+    
+    def __len__(self):
+        return len(self.simbolos)
 
 
 # Tabla de símbolos (singleton)
@@ -69,14 +88,33 @@ class TS:
     def getTablaSimbolo(self):
         return self
     
-    def MostrarTabla(self):
-        if not self.TS.contexto:
-            print("VACIA")
+    def mostrarTS(self):
+        """Muestra toda la tabla de símbolos de todos los contextos"""
+        if not self.contextos:
+            print("  [Tabla vacía]")
+            return
+        
+        for i, contexto in enumerate(self.contextos):
+            print(f"\n  Contexto {i}:")
+            if not contexto.simbolos:
+                print("    [Vacío]")
+            else:
+                for nombre, simbolo in contexto.simbolos.items():
+                    print(f"    • {simbolo}")
+    
+    def mostrarContextoActual(self):
+        """Muestra solo el contexto actual (el último)"""
+        if not self.contextos:
+            print("  [Sin contextos]")
+            return
+        
+        contexto = self.contextos[-1]
+        if not contexto.simbolos:
+            print("  [Contexto vacío]")
+        else:
+            for nombre, simbolo in contexto.simbolos.items():
+                print(f"  • {simbolo}")
 
-        for i, contexto in enumerate(self.TS.contextos):
-            if contexto.simbolos:
-                for nombre, simbolos in contexto.simbolos.items():
-                    print(simbolos)
     def addContexto(self):
         self.contextos.append(Contexto())
 
@@ -104,3 +142,11 @@ class TS:
         if self.contextos:
             return self.contextos[-1].buscarSimbolo(nombre)
         return None
+    
+    def getContextos(self):
+        """Retorna la lista de contextos para iterar"""
+        return self.contextos
+    
+    def cantidadContextos(self):
+        """Retorna la cantidad de contextos activos"""
+        return len(self.contextos)

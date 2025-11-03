@@ -1,3 +1,32 @@
-int a;
-
-int a;
+int main() {
+    int x, y, z
+    
+    x = 5;
+    y = 10;
+    
+    int x;
+    
+    resultado = x + y;
+    
+    int sinInicializar;
+    z = sinInicializar + 10;
+    
+    int noUsada1, noUsada2;
+    
+    
+        int local;
+        local = 100;
+        x = local;
+    
+    
+    y = local + 5;
+    
+    if (x > 0) {
+        int a;
+        a = 20;
+    }
+    
+    suma = suma(x, y);
+    
+    return 0;
+}
